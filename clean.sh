@@ -10,3 +10,6 @@ rm -rf lld
 
 # cmake
 rm -rf build
+
+# exec
+rm -rf YUVPlayer

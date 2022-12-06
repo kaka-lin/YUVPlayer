@@ -18,17 +18,10 @@ class YUVBuffer : public QAbstractVideoBuffer {
   MapMode mapMode() const Q_DECL_OVERRIDE { return m_mode; }
   uchar *map(MapMode mode, int *numBytes, int *bytesPerLine) Q_DECL_OVERRIDE {
     if (mode != NotMapped && m_mode == NotMapped) {
-#ifdef A8
-      if (numBytes)
-        *numBytes = m_yuvMat->rows * m_yuvMat->cols * 2;
-      if (bytesPerLine)
-        *bytesPerLine = m_yuvMat->cols * 2;
-#else
       if (numBytes)
         *numBytes = m_yuvMat->rows * m_yuvMat->cols;
       if (bytesPerLine)
         *bytesPerLine = m_yuvMat->cols;
-#endif
       m_mode = mode;
       return m_yuvMat->data;
     }
@@ -57,6 +50,8 @@ class MyMediaPlayer : public QObject {
   ~MyMediaPlayer() {};
 
   QAbstractVideoSurface *videoSurface() const;
+  void showRGB(cv::Mat curr_frame);
+  void showYUV(cv::Mat curr_frame);
 
  public slots:
   void setVideoSurface(QAbstractVideoSurface *surface);

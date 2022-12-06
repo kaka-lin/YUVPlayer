@@ -1,8 +1,7 @@
-#include "my_media_player.h"
-
 #include <unistd.h>
-
 #include <iostream>
+
+#include "my_media_player.h"
 
 #define MAXPATHLEN 256
 
@@ -51,27 +50,55 @@ void MyMediaPlayer::setFormat(int width, int heigth,
 }
 
 void MyMediaPlayer::onVideoFrameReady(cv::Mat curr_frame) {
-  QVideoFrame::PixelFormat frame_format;
-
   if (!m_surface || curr_frame.empty()) return;
 
-#ifdef A8
-  frame_format = QVideoFrame::Format_UYVY;
-  cv::Mat* m = new cv::Mat(curr_frame);
-#else
-  frame_format = QVideoFrame::Format_YUV420P;
-  cv::Mat* m = new cv::Mat;
-  // cv::COLOR_RGBA2YUV_I420 or cv::COLOR_BGR2YUV_YV12
-  cvtColor(curr_frame, *m, cv::COLOR_RGBA2YUV_I420);
-#endif
+  if (curr_frame.type() == CV_8UC3 || curr_frame.type() == CV_8UC4)
+    showRGB(curr_frame);
+  else
+    showYUV(curr_frame);
+}
+
+void MyMediaPlayer::showRGB(cv::Mat curr_frame) {
+  cv::Mat continuousFrame;
+  if (!curr_frame.isContinuous())
+    continuousFrame = curr_frame.clone();
+  else
+    continuousFrame = curr_frame;
 
   if (!m_isFormatSet) {
-    setFormat(curr_frame.cols, curr_frame.rows,
-              frame_format);
+    setFormat(continuousFrame.cols,
+              continuousFrame.rows,
+              QVideoFrame::Format_RGB32);
     m_isFormatSet = true;
   }
 
-  m_surface->present(QVideoFrame(new YUVBuffer(m), QSize(curr_frame.cols, curr_frame.rows), frame_format));
+  m_image =
+      QImage(continuousFrame.data,
+             continuousFrame.cols,
+             continuousFrame.rows,
+             continuousFrame.step,
+             QImage::Format_RGB888);
+
+  m_image = m_image.rgbSwapped();
+  m_image = m_image.convertToFormat(
+      QVideoFrame::imageFormatFromPixelFormat(QVideoFrame::Format_RGB32));
+
+  m_surface->present(m_image);
+}
+
+void MyMediaPlayer::showYUV(cv::Mat curr_frame) {
+  QVideoFrame::PixelFormat frame_format;
+  frame_format = QVideoFrame::Format_YUV420P;
+  cv::Mat *m = new cv::Mat(curr_frame);
+  cvtColor(curr_frame, *m, cv::COLOR_BGR2YUV_I420);
+
+  if (!m_isFormatSet) {
+    setFormat(curr_frame.cols, curr_frame.rows, frame_format);
+    m_isFormatSet = true;
+  }
+
+  m_surface->present(QVideoFrame(
+      new YUVBuffer(m), QSize(curr_frame.cols, curr_frame.rows), frame_format));
 }
 
 void MyMediaPlayer::play() { m_backend->opencvStart(); }

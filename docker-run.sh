@@ -10,7 +10,10 @@ docker_run_params=$(cat <<-END
     -e QT_X11_NO_MITSHM=1 \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $PWD:/home/user/qt-video-player \
+    --device /dev/dri \
     --device /dev/snd \
+    --network=host \
+    -v $HOME/.Xauthority:/root/.Xauthority \
     -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
     -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
     -w /home/user/qt-video-player \
@@ -18,7 +21,7 @@ docker_run_params=$(cat <<-END
 END
 )
 
-xhost +localhost
+xhost +local:docker
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     if [[ $GPU == *' NVIDIA '* ]]; then
         # printf 'Nvidia GPU is present:  %s\n' "$GPU"
