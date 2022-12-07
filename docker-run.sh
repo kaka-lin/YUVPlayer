@@ -10,13 +10,12 @@ docker_run_params=$(cat <<-END
     -e QT_X11_NO_MITSHM=1 \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $PWD:/home/user/YUVPlayer \
-    --device /dev/dri \
-    --device /dev/snd \
     --network=host \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
     -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
     -w /home/user/YUVPlayer \
+    --privileged \
     $IMAGE_NAME
 END
 )

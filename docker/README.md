@@ -52,13 +52,12 @@ $ docker run --rm -it \
     -e QT_X11_NO_MITSHM=1 \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
     --volume="$PWD:/home/user/YUVPlayer" \
-    --device /dev/dri \
-    --device /dev/snd \
     --network=host \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
     -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
     -w /home/user/YUVPlayer \
+    --privileged \ # sharing any devices in /dev
     kakalin/qt:5.12.0_opencv_gstreamer
 ```
 
@@ -105,11 +104,10 @@ Reference: [X11 in docker on macOS](https://gist.github.com/cschiewek/246a244ba2
         --volume="/tmp:/tmp" \
         --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
         --volume="$PWD:/home/user/YUVPlayer" \
-        --device /dev/dri \
-        --device /dev/snd \
         --network=host \
         -v $HOME/.Xauthority:/root/.Xauthority \
         -w /home/user/YUVPlayer \
+        --privileged \ # sharing any devices in /dev
         kakalin/qt:5.12.0_opencv_gstreamer
     ```
 
