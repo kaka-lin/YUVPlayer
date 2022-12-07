@@ -3,17 +3,17 @@ import QtQuick.Controls 2.3
 import QtQuick.Dialogs 1.3
 import QtQuick.Window 2.10
 import QtGraphicalEffects 1.0 // DropShadow
-import QtMultimedia 5.9
 
 import components.common 1.0
+import "pages"
 
 ApplicationWindow {
     id: window
     visible: true
-    width: 640
-    height: 480
+    width: 1280
+    height: 720
     //visibility: Window.FullScreen
-    title: qsTr("The Example of OpenCV and QML")
+    title: qsTr("YUVPlayer")
 
     header: ToolBar {
         id: menu
@@ -89,9 +89,9 @@ ApplicationWindow {
         id: aboutBox
         title: "About"
         text: "
-               This is QML Template\n
+               This is YUVPlayer\n
                Version: 0.1
-               Date:2018/10/11"
+               Date:2022/12/06"
         icon: StandardIcon.Information
     }
 
@@ -103,57 +103,6 @@ ApplicationWindow {
         selectFolder: true
     }
 
-    Row {
-        id: btnRow
-        spacing: (parent.width - playBtn.width * 3) / 4
-
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        Button {
-            id: playBtn;
-            width: 120;
-            height: 60;
-            text: qsTr("Play")
-            onClicked: {
-                player.play();
-            }
-        }
-
-        Button {
-            id: pauseBtn;
-            width: playBtn.width;
-            height: playBtn.height;
-            text: qsTr("Pause")
-            onClicked: {
-                player.pause();
-            }
-        }
-
-        Button {
-            id: stopBtn;
-            width: playBtn.width;
-            height: playBtn.height;
-            text: qsTr("Stop")
-            onClicked: {
-                player.stop();
-            }
-        }
-    }
-
-    Rectangle {
-        id: videoArea
-        width: parent.width
-        height: parent.height - 40
-
-        anchors.top: btnRow.bottom
-        anchors.bottom: parent.bottom
-        anchors.topMargin: 20
-        anchors.bottomMargin: 20
-
-        VideoOutput {
-            source: player
-            anchors.fill: parent
-            focus : visible // to receive focus and capture key events when visible
-        }
-    }
+    // Page: YUVPlayer
+    YUVPlayerPage {}
 }
