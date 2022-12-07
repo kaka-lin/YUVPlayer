@@ -2,9 +2,11 @@
 #define OPENCV_THREAD_H
 
 #include <QDebug>
+#include <QMap>
 #include <QObject>
 #include <iostream>
 #include <unistd.h>
+#include <string>
 
 #include <opencv2/opencv.hpp>
 
@@ -13,7 +15,7 @@ class OpenCVThread : public QObject {
   Q_OBJECT
 
  public:
-  explicit OpenCVThread(QObject *parent = nullptr);
+  explicit OpenCVThread(QMap<QString, QVariant> config, QObject *parent = nullptr);
   ~OpenCVThread(){};
 
  public slots:
@@ -27,6 +29,12 @@ class OpenCVThread : public QObject {
  private:
   cv::VideoCapture cap;
   cv::Mat frame;
+
+  std::string file;
+  std::string width;
+  std::string height;
+  std::string framerate;
+  std::string format;
 
   bool isRunning;
   bool isPausing;

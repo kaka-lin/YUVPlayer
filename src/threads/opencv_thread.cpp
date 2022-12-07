@@ -7,9 +7,14 @@
 
 using namespace std;
 
-OpenCVThread::OpenCVThread(QObject *parent)
+OpenCVThread::OpenCVThread(QMap<QString, QVariant> config, QObject *parent)
     : QObject(parent), isRunning(false), isPausing(false) {
-  cv::VideoCapture cap;
+
+  this->file = config["file"].toString().toStdString();
+  this->width = config["width"].toString().toStdString();
+  this->height = config["height"].toString().toStdString();
+  this->framerate = config["framerate"].toString().toStdString();
+  this->format = config["format"].toString().toStdString();
 }
 
 void OpenCVThread::start() {
@@ -19,22 +24,23 @@ void OpenCVThread::start() {
   string data_path, gst_str;
   stringstream gst_pipline;
 
-  if (getcwd(cwd, sizeof(cwd)) != NULL) {
-    printf("Current working dir: %s\n", cwd);
-    path = string(cwd);
-    pos = path.find("/build");
-    data_path = path.substr(0, pos) + "/data/test.yuv";
-  } else {
-    qDebug() << "Please replace the path with your video path";
-  }
+  // if (getcwd(cwd, sizeof(cwd)) != NULL) {
+  //   printf("Current working dir: %s\n", cwd);
+  //   path = string(cwd);
+  //   pos = path.find("/build");
+  //   data_path = path.substr(0, pos) + "/images/test.yuv";
+  // } else {
+  //   qDebug() << "Please replace the path with your video path";
+  // }
 
   // GStreamer Pipeline
-  gst_pipline << "filesrc location = " << data_path
+  gst_pipline << "filesrc location = " << this->file
               << " ! videoparse format=GST_VIDEO_FORMAT_UYVY"
-              << " width=" << 1280 << " height=" << 720
-              << " framerate=" << 30 / 1 << " ! videoconvert ! appsink";
+              << " width=" << this->width << " height=" << this->height
+              << " framerate=" << this->framerate << " ! videoconvert ! appsink";
 
   gst_str = gst_pipline.str();
+  cout << gst_str;
   cap.open(gst_str, cv::CAP_GSTREAMER);
   if (!cap.isOpened()) {
     cout << ">>>> ERROR: Unable to open camera/video:" << gst_str << endl;

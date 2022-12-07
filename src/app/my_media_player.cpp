@@ -101,7 +101,9 @@ void MyMediaPlayer::showYUV(cv::Mat curr_frame) {
       new YUVBuffer(m), QSize(curr_frame.cols, curr_frame.rows), frame_format));
 }
 
-void MyMediaPlayer::play() { m_backend->opencvStart(); }
+void MyMediaPlayer::play(QMap<QString, QVariant> config) {
+  m_backend->opencvStart(config);
+}
 
 void MyMediaPlayer::pause() {}
 

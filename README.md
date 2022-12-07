@@ -2,6 +2,8 @@
 
 A Player that shows YUV format image/video on GUI that builds by QML.
 
+![](images/result.png)
+
 ## Usage
 
 ### 1. Enviromnent

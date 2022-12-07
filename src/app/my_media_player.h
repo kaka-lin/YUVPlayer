@@ -2,6 +2,7 @@
 #define MY_MEDIA_PLAYER_H
 
 #include <QObject>
+#include <QMap>
 #include <QDebug>
 #include <QAbstractVideoSurface>
 #include <QVideoSurfaceFormat>
@@ -41,7 +42,7 @@ class MyMediaPlayer : public QObject {
   Q_PROPERTY(QAbstractVideoSurface *videoSurface READ videoSurface WRITE setVideoSurface NOTIFY surfaceChanged)
 
  public:
-  Q_INVOKABLE void play();
+  Q_INVOKABLE void play(QMap<QString, QVariant> config);
   Q_INVOKABLE void pause();
   Q_INVOKABLE void stop();
 

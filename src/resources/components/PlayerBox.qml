@@ -1,6 +1,7 @@
 import QtQuick 2.10
-import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.3
+import QtQuick.Dialogs 1.3
+import QtQuick.Layouts 1.3
 import QtMultimedia 5.9
 
 Rectangle {
@@ -44,6 +45,43 @@ Rectangle {
                 Row {
                     spacing: 10
 
+                    Button {
+                        id: fileBtn;
+                        width: settingArea.width / 6
+                        height: 30
+                        text: qsTr("File")
+                        onClicked: fileDialog2.open();
+                    }
+
+                    TextField {
+                        id: fileFiled
+                        width: settingArea.width / 1.5
+                        height: 30
+
+                        selectByMouse: true
+                    }
+
+                    FileDialog {
+                        id: fileDialog2
+                        title: "Please choose a file"
+                        folder: shortcuts.desktop
+                        visible: false
+
+                        onAccepted: {
+                            console.log("You chose: " + fileDialog2.fileUrls);
+                            var path = fileDialog2.fileUrl.toString();
+                            // remove prefixed "file:///" -> /
+                            path = path.replace(/^(file:\/{2})|(qrc:\/{2})|(http:\/{2})/,"");
+                            // unescape html codes like '%23' for '#'
+                            var cleanPath = decodeURIComponent(path);
+                            fileFiled.text = cleanPath;
+                        }
+                    }
+                }
+
+                Row {
+                    spacing: 10
+
                     Label {
                         text: "Width: "
                         anchors.verticalCenter: widthFiled.verticalCenter
@@ -53,7 +91,13 @@ Rectangle {
                         id: widthFiled
                         width: settingArea.width / 3
                         height: 30
+                        text: "1280"
 
+                        selectByMouse: true
+
+                        onTextChanged: {
+
+                        }
                     }
 
                     Label {
@@ -65,6 +109,9 @@ Rectangle {
                         id: heightFiled
                         width: settingArea.width / 3
                         height: 30
+                        text: "720"
+
+                        selectByMouse: true
                     }
                 }
 
@@ -80,6 +127,9 @@ Rectangle {
                         id: framerateFiled
                         width: settingArea.width / 3
                         height: 30
+                        text: "30"
+
+                        selectByMouse: true
                     }
                 }
 
@@ -124,8 +174,18 @@ Rectangle {
                         height: 60;
                         text: qsTr("Play")
                         onClicked: {
-                            console.log(settingArea.width / 6);
-                            player.play();
+                            if (fileFiled.text == "") {
+                                console.log("Please choose a file")
+                            } else {
+                                var config = {
+                                'file': fileFiled.text,
+                                'width': widthFiled.text,
+                                'height': heightFiled.text,
+                                'framerate': framerateFiled.text,
+                                'format': yuvFiled.currentText
+                            };
+                                player.play(config);
+                            }
                         }
                     }
 

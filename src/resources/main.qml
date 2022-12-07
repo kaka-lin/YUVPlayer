@@ -97,9 +97,9 @@ ApplicationWindow {
 
     FileDialog {
         id: fileDialog
-        visible: false
         title: "Please choose a file"
         folder: shortcuts.home
+        visible: false
         selectFolder: true
     }
 
