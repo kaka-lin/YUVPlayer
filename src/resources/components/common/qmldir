@@ -1,5 +1,6 @@
 module components.common
 
-Clock 1.0 Clock.qml
-KProgressBar 1.0 KProgressBar.qml
-KToolButton 1.0 KToolButton.qml
+Clock        1.0  Clock.qml
+KProgressBar 1.0  KProgressBar.qml
+KToolButton  1.0  KToolButton.qml
+CameraCombo  1.0  CameraCombo.qml

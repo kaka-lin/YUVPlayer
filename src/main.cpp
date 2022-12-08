@@ -4,6 +4,7 @@
 #include <QQmlContext>
 
 #include "app/my_media_player.h"
+#include "app/camera_info.h"
 
 int main(int argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -12,6 +13,9 @@ int main(int argc, char *argv[]) {
 
   // QML engine
   QQmlApplicationEngine engine;
+
+  // QML type registration
+  CameraInfo::registerQmlType();
 
   // QML context
   MyMediaPlayer *player = new MyMediaPlayer();

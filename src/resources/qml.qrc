@@ -11,6 +11,7 @@
         <file>components/common/Clock.qml</file>
         <file>components/common/KProgressBar.qml</file>
         <file>components/common/KToolButton.qml</file>
+        <file>components/common/CameraCombo.qml</file>
 
         <file>images/about.ico</file>
         <file>images/exit.ico</file>

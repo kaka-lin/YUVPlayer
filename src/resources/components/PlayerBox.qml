@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.3
 import QtMultimedia 5.9
 import QtQuick.Window 2.10
 
+import components.common 1.0
+
 Rectangle {
     id: root
     anchors.fill: parent
@@ -70,7 +72,6 @@ Rectangle {
                         folder: shortcuts.pictures
                         visible: false
                         nameFilters: [ "Image files (*.yuv *.png *.jpg)", "All files (*)" ]
-                        sidebarVisible: fileDialogSidebarVisible.checked
 
                         onAccepted: {
                             console.log("You chose: " + fileDialog2.fileUrls);
@@ -81,6 +82,20 @@ Rectangle {
                             var cleanPath = decodeURIComponent(path);
                             fileFiled.text = cleanPath;
                         }
+                    }
+                }
+
+                Row {
+                    spacing: 10
+
+                    Label {
+                        text: "Camera: "
+                        anchors.verticalCenter: camera.verticalCenter
+                    }
+
+                    CameraCombo {
+                        id: camera
+                        anchors.verticalCenter: parent.verticalCenter
                     }
                 }
 
