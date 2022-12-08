@@ -27,7 +27,8 @@ SOURCES += \
 HEADERS += \
     src/threads/backend_thread.h \
     src/threads/opencv_thread.h \
-    src/app/my_media_player.h
+    src/app/my_media_player.h \
+    src/app/video_format.h
 
 RESOURCES += src/resources/qml.qrc
 

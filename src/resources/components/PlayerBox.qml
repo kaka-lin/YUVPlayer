@@ -143,21 +143,20 @@ Rectangle {
 
                     ComboBox {
                         id: yuvFiled
-                        width: settingArea.width / 3
+                        width: settingArea.width / 2
                         height: 30
-                        currentIndex: 5
+                        currentIndex: 3
                         model: ListModel {
                             id: yuvComboBox
-                            ListElement { text: "YUV444" }
-                            ListElement { text: "YUV422(I422)" }
-                            ListElement { text: "YUV420(I420)" }
-                            ListElement { text: "YUYV(YUY2)" }
+                            ListElement { text: "I420 (YU12, YUV420P)" }
+                            ListElement { text: "YV12 (YUV420P)" }
+                            ListElement { text: "YUY2 (YUYV)" }
+                            ListElement { text: "UYVY (Y422)" }
                             ListElement { text: "YVYU" }
-                            ListElement { text: "UYVY" }
-                            ListElement { text: "YV12" }
-                            ListElement { text: "YV16" }
-                            ListElement { text: "NV12" }
-                            ListElement { text: "NV21" }
+                            ListElement { text: "NV12 (YUV420SP)" }
+                            ListElement { text: "NV21 (YUV420SP)" }
+                            ListElement { text: "NV16 (YUV422SP)" }
+                            ListElement { text: "NV61 (YUV422SP)" }
                         }
                         onCurrentIndexChanged: {
                             console.debug(yuvComboBox.get(currentIndex).text);
@@ -177,13 +176,16 @@ Rectangle {
                             if (fileFiled.text == "") {
                                 console.log("Please choose a file")
                             } else {
+                                var format = yuvFiled.currentText.split(' ')[0];
+
                                 var config = {
-                                'file': fileFiled.text,
-                                'width': widthFiled.text,
-                                'height': heightFiled.text,
-                                'framerate': framerateFiled.text,
-                                'format': yuvFiled.currentText
-                            };
+                                    'file': fileFiled.text,
+                                    'width': widthFiled.text,
+                                    'height': heightFiled.text,
+                                    'framerate': framerateFiled.text,
+                                    'format': format
+                                };
+
                                 player.play(config);
                             }
                         }

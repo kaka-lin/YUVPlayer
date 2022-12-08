@@ -4,6 +4,18 @@ A Player that shows YUV format image/video on GUI that builds by QML.
 
 ![](images/result.png)
 
+## Support Format
+
+- I420 (YU12, YUV420P)
+- YV12 (YUV420P)
+- YUY2 (YUYV)
+- UYVY (Y422)
+- YVYU
+- NV12 (YUV420SP)
+- NV21 (YUV420SP)
+- NV16 (YUV422SP)
+- NV61 (YUV422)
+
 ## Usage
 
 ### 1. Enviromnent
@@ -35,16 +47,22 @@ Please install Qt/QML on your local machine.
 
 ### 2. Build and Run
 
-#### 2-1. qmake
+#### 2-1. Build
+
+`qmake` or `CMake` choose one for building.
 
 ```bash
+# qmake
 $ ./build.sh
+
+# cmake
+$ ./cmake-build.sh
 ```
 
-#### 2-2. CMake
+### 2-2. Run
 
 ```bash
-$ ./cmake-build.sh
+$ ./build/YUVPlayer
 ```
 
 ## Others

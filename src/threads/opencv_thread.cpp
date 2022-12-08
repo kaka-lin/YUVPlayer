@@ -2,6 +2,7 @@
 #include <string>
 
 #include "opencv_thread.h"
+#include "src/app/video_format.h"
 
 #define MAXPATHLEN 256
 
@@ -34,8 +35,18 @@ void OpenCVThread::start() {
   // }
 
   // GStreamer Pipeline
+  int gst_format = 0;
+  std::unordered_map<std::string, int>::const_iterator format_map = VideoFormat.find(this->format);
+  if (format_map == VideoFormat.end()) {
+    cout << ">>>> ERROR: This format: " << format  << " is not supported!"<< endl;
+    emit finished("OpenCV");
+    return;
+  } else {
+    gst_format = format_map->second;
+  }
+
   gst_pipline << "filesrc location = " << this->file
-              << " ! videoparse format=GST_VIDEO_FORMAT_UYVY"
+              << " ! videoparse format=" << gst_format
               << " width=" << this->width << " height=" << this->height
               << " framerate=" << this->framerate << " ! videoconvert ! appsink";
 
@@ -52,7 +63,7 @@ void OpenCVThread::start() {
   while (this->isRunning) {
     cap.read(this->frame);
     if (this->frame.empty()) {
-      qDebug() << "ERROR! blank frame grabbed\n";
+      // qDebug() << "ERROR! blank frame grabbed\n";
       break;
     } else {
       emit frameReady(this->frame);
