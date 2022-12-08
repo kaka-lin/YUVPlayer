@@ -60,6 +60,7 @@ class MyMediaPlayer : public QObject {
 
  signals:
   void surfaceChanged(QAbstractVideoSurface* surface);
+  void threadFinishSig();
 
  private:
   void setFormat(int width, int height, QVideoFrame::PixelFormat frame_format);

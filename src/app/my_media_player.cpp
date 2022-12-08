@@ -11,6 +11,7 @@ MyMediaPlayer::MyMediaPlayer(QObject *parent)
     : QObject(parent), m_isFormatSet(false) {
   m_backend = new BackendThread(this);
   connect(m_backend, &BackendThread::frameReady, this, &MyMediaPlayer::onVideoFrameReady);
+  connect(m_backend, &BackendThread::threadFinishSig, this, &MyMediaPlayer::threadFinishSig);
 }
 
 QAbstractVideoSurface *MyMediaPlayer::videoSurface() const {

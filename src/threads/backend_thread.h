@@ -26,6 +26,7 @@ class BackendThread : public QObject {
  signals:
   void uiUnlock();
   void frameReady(cv::Mat frame);
+  void threadFinishSig();
 
  private:
   QMap<QString, QThread *> threads;

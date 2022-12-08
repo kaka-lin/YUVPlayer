@@ -45,5 +45,6 @@ void BackendThread::finished(QString thread_name) {
     thread->quit();
     thread->wait();
     qDebug() << qPrintable(QString(">>> [Backend] %1 Thread Finish <<<").arg(thread_name));
+    emit threadFinishSig();
   }
 }

@@ -230,4 +230,14 @@ Rectangle {
             }
         }
     }
+
+    Connections {
+        target: player
+
+        onThreadFinishSig: {
+            stopBtn.enabled = false;
+            pauseBtn.enabled = false;
+            playBtn.enabled = true;
+        }
+    }
 }
