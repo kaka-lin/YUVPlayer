@@ -20,6 +20,7 @@ class OpenCVThread : public QObject {
 
  public slots:
   void start();
+  void pause();
   void stop();
 
  signals:
@@ -36,8 +37,8 @@ class OpenCVThread : public QObject {
   std::string framerate;
   std::string format;
 
-  bool isRunning;
-  bool isPausing;
+  bool isRunning = false;
+  bool isPausing = false;
 };
 Q_DECLARE_METATYPE(OpenCVThread*)
 

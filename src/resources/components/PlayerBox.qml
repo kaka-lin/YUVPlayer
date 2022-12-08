@@ -3,6 +3,7 @@ import QtQuick.Controls 2.3
 import QtQuick.Dialogs 1.3
 import QtQuick.Layouts 1.3
 import QtMultimedia 5.9
+import QtQuick.Window 2.10
 
 Rectangle {
     id: root
@@ -21,9 +22,11 @@ Rectangle {
             color: "black"
 
             VideoOutput {
+                id: videoOutput
                 source: player
                 anchors.fill: parent
                 focus : visible // to receive focus and capture key events when visible
+                autoOrientation: true
             }
         }
 
@@ -64,8 +67,10 @@ Rectangle {
                     FileDialog {
                         id: fileDialog2
                         title: "Please choose a file"
-                        folder: shortcuts.desktop
+                        folder: shortcuts.pictures
                         visible: false
+                        nameFilters: [ "Image files (*.yuv *.png *.jpg)", "All files (*)" ]
+                        sidebarVisible: fileDialogSidebarVisible.checked
 
                         onAccepted: {
                             console.log("You chose: " + fileDialog2.fileUrls);
@@ -176,6 +181,9 @@ Rectangle {
                             if (fileFiled.text == "") {
                                 console.log("Please choose a file")
                             } else {
+                                playBtn.enabled = false;
+                                pauseBtn.enabled = true;
+                                stopBtn.enabled = true;
                                 var format = yuvFiled.currentText.split(' ')[0];
 
                                 var config = {
@@ -196,7 +204,10 @@ Rectangle {
                         width: playBtn.width;
                         height: playBtn.height;
                         text: qsTr("Pause")
+                        enabled: false
+
                         onClicked: {
+                            pauseBtn.text = pauseBtn.text == qsTr("Pause") ? qsTr("Continue") : qsTr("Pause")
                             player.pause();
                         }
                     }
@@ -206,7 +217,12 @@ Rectangle {
                         width: playBtn.width;
                         height: playBtn.height;
                         text: qsTr("Stop")
+                        enabled: false
+
                         onClicked: {
+                            stopBtn.enabled = false;
+                            pauseBtn.enabled = false;
+                            playBtn.enabled = true;
                             player.stop();
                         }
                     }

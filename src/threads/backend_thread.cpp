@@ -22,6 +22,14 @@ void BackendThread::opencvStart(QMap<QString, QVariant> config) {
   thread->start();
 }
 
+void BackendThread::opencvPause() {
+  OpenCVThread *worker;
+  if (workers.contains("OpenCV")) {
+    worker = qvariant_cast<OpenCVThread *>(workers.value("OpenCV"));
+    worker->pause();
+  }
+}
+
 void BackendThread::opencvStop() {
   OpenCVThread *worker;
   if (workers.contains("OpenCV")) {

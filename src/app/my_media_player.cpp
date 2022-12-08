@@ -105,6 +105,6 @@ void MyMediaPlayer::play(QMap<QString, QVariant> config) {
   m_backend->opencvStart(config);
 }
 
-void MyMediaPlayer::pause() {}
+void MyMediaPlayer::pause() { m_backend->opencvPause(); }
 
 void MyMediaPlayer::stop() { m_backend->opencvStop(); }

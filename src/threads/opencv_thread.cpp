@@ -20,19 +20,8 @@ OpenCVThread::OpenCVThread(QMap<QString, QVariant> config, QObject *parent)
 
 void OpenCVThread::start() {
   char cwd[MAXPATHLEN];
-  string path;
-  size_t pos;
-  string data_path, gst_str;
+  string gst_str;
   stringstream gst_pipline;
-
-  // if (getcwd(cwd, sizeof(cwd)) != NULL) {
-  //   printf("Current working dir: %s\n", cwd);
-  //   path = string(cwd);
-  //   pos = path.find("/build");
-  //   data_path = path.substr(0, pos) + "/images/test.yuv";
-  // } else {
-  //   qDebug() << "Please replace the path with your video path";
-  // }
 
   // GStreamer Pipeline
   int gst_format = 0;
@@ -51,7 +40,6 @@ void OpenCVThread::start() {
               << " framerate=" << this->framerate << " ! videoconvert ! appsink";
 
   gst_str = gst_pipline.str();
-  cout << gst_str;
   cap.open(gst_str, cv::CAP_GSTREAMER);
   if (!cap.isOpened()) {
     cout << ">>>> ERROR: Unable to open camera/video:" << gst_str << endl;
@@ -61,13 +49,15 @@ void OpenCVThread::start() {
 
   this->isRunning = true;
   while (this->isRunning) {
-    cap.read(this->frame);
-    if (this->frame.empty()) {
-      // qDebug() << "ERROR! blank frame grabbed\n";
-      break;
-    } else {
-      emit frameReady(this->frame);
-      usleep(30000);  // 30ms (30fps, 0.03s)
+    if (!this->isPausing) {
+      cap.read(this->frame);
+      if (this->frame.empty()) {
+        // qDebug() << "ERROR! blank frame grabbed\n";
+        break;
+      } else {
+        emit frameReady(this->frame);
+        usleep(30000);  // 30ms (30fps, 0.03s)
+      }
     }
   }
 
@@ -75,5 +65,7 @@ void OpenCVThread::start() {
   cv::destroyAllWindows();
   emit finished("OpenCV");
 }
+
+void OpenCVThread::pause() { this->isPausing = !this->isPausing; }
 
 void OpenCVThread::stop() { this->isRunning = false; }
