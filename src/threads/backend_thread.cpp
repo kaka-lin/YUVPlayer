@@ -5,10 +5,10 @@
 
 BackendThread::BackendThread(QObject *parent) : QObject(parent) {}
 
-void BackendThread::opencvStart(QMap<QString, QVariant> config) {
+void BackendThread::opencvStart(QString mode, QMap<QString, QVariant> config) {
   qDebug() << ">>> [Backend] OpenCV Thread Start <<<";
   QThread *thread = new QThread(0);
-  OpenCVThread *worker = new OpenCVThread(config);
+  OpenCVThread *worker = new OpenCVThread(mode, config);
   threads["OpenCV"] = thread;
   workers["OpenCV"] = QVariant::fromValue(worker);
   worker->moveToThread(thread);

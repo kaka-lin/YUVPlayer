@@ -15,7 +15,7 @@ class OpenCVThread : public QObject {
   Q_OBJECT
 
  public:
-  explicit OpenCVThread(QMap<QString, QVariant> config, QObject *parent = nullptr);
+  explicit OpenCVThread(QString mode, QMap<QString, QVariant> config, QObject *parent = nullptr);
   ~OpenCVThread(){};
 
  public slots:
@@ -31,6 +31,7 @@ class OpenCVThread : public QObject {
   cv::VideoCapture cap;
   cv::Mat frame;
 
+  std::string mode;
   std::string file;
   std::string width;
   std::string height;

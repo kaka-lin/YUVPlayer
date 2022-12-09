@@ -47,8 +47,28 @@ Rectangle {
 
                 spacing: 20
 
+                GroupBox {
+                    title: "Video Source: "
+
+                    Row {
+                        spacing: 10
+
+                        RadioButton {
+                            id: fileCheck
+                            text: qsTr("File")
+                            checked: true
+                        }
+
+                        RadioButton {
+                            id: cameraCheck
+                            text: qsTr("Camera")
+                        }
+                    }
+                }
+
                 Row {
                     spacing: 10
+                    visible: fileCheck.checked
 
                     Button {
                         id: fileBtn;
@@ -87,6 +107,7 @@ Rectangle {
 
                 Row {
                     spacing: 10
+                    visible: cameraCheck.checked
 
                     Label {
                         text: "Camera: "
@@ -111,7 +132,7 @@ Rectangle {
                         id: widthFiled
                         width: settingArea.width / 3
                         height: 30
-                        text: "1280"
+                        text: fileCheck.checked ? "1280" : "640"
 
                         selectByMouse: true
 
@@ -129,7 +150,7 @@ Rectangle {
                         id: heightFiled
                         width: settingArea.width / 3
                         height: 30
-                        text: "720"
+                        text: fileCheck.checked ? "720" : "480"
 
                         selectByMouse: true
                     }
@@ -165,7 +186,7 @@ Rectangle {
                         id: yuvFiled
                         width: settingArea.width / 2
                         height: 30
-                        currentIndex: 3
+                        currentIndex: fileCheck.checked ? 3 : 2
                         model: ListModel {
                             id: yuvComboBox
                             ListElement { text: "I420 (YU12, YUV420P)" }
@@ -179,7 +200,7 @@ Rectangle {
                             ListElement { text: "NV61 (YUV422SP)" }
                         }
                         onCurrentIndexChanged: {
-                            console.debug(yuvComboBox.get(currentIndex).text);
+                            // console.debug(yuvComboBox.get(currentIndex).text);
                         }
                     }
                 }
@@ -193,23 +214,32 @@ Rectangle {
                         height: 60;
                         text: qsTr("Play")
                         onClicked: {
-                            if (fileFiled.text == "") {
+                            var mode = "";
+                            var file = "";
+
+                            if (fileCheck.checked && fileFiled.text == "") {
                                 console.log("Please choose a file")
+                            } else if (cameraCheck.checked && camera.currentText == " ") {
+                                console.log("Please choose a camera")
                             } else {
+                                mode = fileCheck.checked ? "file" : "camera"
+                                file = fileCheck.checked ? fileFiled.text : camera.currentText
                                 playBtn.enabled = false;
                                 pauseBtn.enabled = true;
                                 stopBtn.enabled = true;
                                 var format = yuvFiled.currentText.split(' ')[0];
 
+                                console.log(file)
+
                                 var config = {
-                                    'file': fileFiled.text,
+                                    'file': file,
                                     'width': widthFiled.text,
                                     'height': heightFiled.text,
                                     'framerate': framerateFiled.text,
                                     'format': format
                                 };
 
-                                player.play(config);
+                                player.play(mode, config);
                             }
                         }
                     }

@@ -4,13 +4,15 @@ A Player that shows YUV format image/video on GUI that builds by QML.
 
 ![](images/result.png)
 
+Known issues please see [here](#issues).
+
 ## Support Format
 
 - I420 (YU12, YUV420P)
 - YV12 (YUV420P)
-- YUY2 (YUYV)
-- UYVY (Y422)
-- YVYU
+- YUY2 (YUYV, YUV422)
+- UYVY (Y422, YUV422)
+- YVYU (YUV422)
 - NV12 (YUV420SP)
 - NV21 (YUV420SP)
 - NV16 (YUV422SP)
@@ -90,6 +92,10 @@ $ export OPENCV_LOG_LEVEL=DEBUG
 # Enable OpenCV VideoIO debug message
 $ export OPENCV_VIDEOIO_DEBUG=1
 ```
+
+## Issues
+
+- [VideoOutput doesn't display anything with Software Backend / Renderer](https://bugreports.qt.io/browse/QTBUG-62449)
 
 ## Acknowledgements
 

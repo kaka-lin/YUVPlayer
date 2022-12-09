@@ -28,8 +28,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             $docker_run_params
     else
         docker run \
-            -e DISPLAY=$DISPLAY \
             -e QT_QUICK_BACKEND=software \
+            -e DISPLAY=$DISPLAY \
             -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
             -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
             $docker_run_params

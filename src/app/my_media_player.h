@@ -42,7 +42,7 @@ class MyMediaPlayer : public QObject {
   Q_PROPERTY(QAbstractVideoSurface *videoSurface READ videoSurface WRITE setVideoSurface NOTIFY surfaceChanged)
 
  public:
-  Q_INVOKABLE void play(QMap<QString, QVariant> config);
+  Q_INVOKABLE void play(QString mode, QMap<QString, QVariant> config);
   Q_INVOKABLE void pause();
   Q_INVOKABLE void stop();
 

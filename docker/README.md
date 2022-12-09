@@ -95,7 +95,7 @@ Reference: [X11 in docker on macOS](https://gist.github.com/cschiewek/246a244ba2
 
     Creating a bridge between a network socket with a TCP listener on port `6000` (the default port of the X window system) and the X window server on my OS X host.
 
-    ```
+    ```bash
     $ socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"
     ```
 
