@@ -109,7 +109,8 @@ Reference: [X11 in docker on macOS](https://gist.github.com/cschiewek/246a244ba2
         --network=host \
         -v $HOME/.Xauthority:/root/.Xauthority \
         -w /home/user/YUVPlayer \
-        --privileged \ # sharing any devices in /dev
+        --privileged \
+        -e QT_QUICK_BACKEND=software \
         kakalin/qt:5.12.0_opencv_gstreamer
     ```
 
