@@ -32,7 +32,6 @@ class CameraInfo : public QQuickItem, public QCameraInfo {
     qmlRegisterType<CameraInfo>("CameraInfo", 1, 0, "CameraInfo");
   }
 
-
   cameraDelegateType cameraDelegate();
   QString defaultCamera();
   QList<QString> availableCameras();

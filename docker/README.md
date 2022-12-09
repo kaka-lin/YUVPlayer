@@ -57,9 +57,11 @@ $ docker run --rm -it \
     -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
     -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
     -w /home/user/YUVPlayer \
-    --privileged \ # sharing any devices in /dev
+    --privileged \
     kakalin/qt:5.12.0_opencv_gstreamer
 ```
+
+- `--privileged`: sharing any devices in /dev
 
 > Notice current path, if you use `$PWD`, you should in the root path of the  project,
 

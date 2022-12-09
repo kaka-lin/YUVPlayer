@@ -1,4 +1,4 @@
-QT += qml quick multimedia
+QT += qml quick multimedia core
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -22,13 +22,15 @@ SOURCES += \
     src/main.cpp \
     src/threads/backend_thread.cpp \
     src/threads/opencv_thread.cpp \
-    src/app/my_media_player.cpp
+    src/app/my_media_player.cpp \
+    src/app/camera_info.cpp
 
 HEADERS += \
     src/threads/backend_thread.h \
     src/threads/opencv_thread.h \
     src/app/my_media_player.h \
-    src/app/video_format.h
+    src/app/video_format.h \
+    src/app/camera_info.h
 
 RESOURCES += src/resources/qml.qrc
 

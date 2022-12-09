@@ -12,7 +12,15 @@ venv/
 # cmake
 build/
 
+# qmkae
+obj
+Makefile
+.qmake.stash
+lld
+YUVPlayer
+
 # QML
 *.qmlc
 
+# data folder
 data
