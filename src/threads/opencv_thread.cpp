@@ -8,7 +8,7 @@
 
 using namespace std;
 
-OpenCVThread::OpenCVThread(QString mode, QMap<QString, QVariant> config, QObject *parent)
+OpenCVThread::OpenCVThread(QMap<QString, QVariant> config, QObject *parent)
     : QObject(parent), isRunning(false), isPausing(false) {
 
   this->mode = config["mode"].toString().toStdString();

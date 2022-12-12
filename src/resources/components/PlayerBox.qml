@@ -229,9 +229,8 @@ Rectangle {
                                 stopBtn.enabled = true;
                                 var format = yuvFiled.currentText.split(' ')[0];
 
-                                console.log(file)
-
                                 var config = {
+                                    'mode': mode,
                                     'file': file,
                                     'width': widthFiled.text,
                                     'height': heightFiled.text,
@@ -239,7 +238,7 @@ Rectangle {
                                     'format': format
                                 };
 
-                                player.play(mode, config);
+                                player.play(config);
                             }
                         }
                     }

@@ -15,7 +15,7 @@ class OpenCVThread : public QObject {
   Q_OBJECT
 
  public:
-  explicit OpenCVThread(QString mode, QMap<QString, QVariant> config, QObject *parent = nullptr);
+  explicit OpenCVThread(QMap<QString, QVariant> config, QObject *parent = nullptr);
   ~OpenCVThread(){};
 
  public slots:

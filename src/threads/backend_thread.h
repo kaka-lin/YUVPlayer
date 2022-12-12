@@ -17,7 +17,7 @@ class BackendThread : public QObject {
   ~BackendThread(){};
 
  public slots:
-  void opencvStart(QString mode, QMap<QString, QVariant> config);
+  void opencvStart(QMap<QString, QVariant> config);
   void opencvStop();
   void opencvPause();
 
