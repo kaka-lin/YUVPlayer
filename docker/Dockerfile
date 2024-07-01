@@ -42,7 +42,6 @@ RUN rm 3.4.2.zip && rm -r opencv-3.4.2
 #   ENV LD_LIBRARY_PATH="/usr/local/qt5/lib:$LD_LIBRARY_PATH"
 #
 # So we need to unset `LD_LIBRARY_PATH`
-USER user
 ENV LD_LIBRARY_PATH=""
 RUN sudo cp /usr/local/lib/python${PYTHON_VERSION}/site-packages/cv2.cpython-38-x86_64-linux-gnu.so \
-    /usr/local/anaconda3/lib/python${PYTHON_VERSION}/site-packages/
+    /opt/conda/lib/python${PYTHON_VERSION}/site-packages/
