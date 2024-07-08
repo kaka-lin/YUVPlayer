@@ -1,4 +1,4 @@
-FROM kakalin/qt:5.12.0
+FROM kakalin/qt:5.15.10
 LABEL maintainer="kaka <vn503024@gmail.com>"
 
 RUN sudo apt-get update && \
@@ -34,6 +34,9 @@ RUN cd opencv-3.4.2/build && \
 
 RUN rm 3.4.2.zip && rm -r opencv-3.4.2
 
+# Install nunpy for OpenCV
+RUN conda activate py310 && pip install numpy==1.21
+
 # Would cause issue:
 #   Cannot mix incompatible Qt library (version 0x50c00) with this library (version 0x50c01)
 #
@@ -43,5 +46,10 @@ RUN rm 3.4.2.zip && rm -r opencv-3.4.2
 #
 # So we need to unset `LD_LIBRARY_PATH`
 ENV LD_LIBRARY_PATH=""
-RUN sudo cp /usr/local/lib/python${PYTHON_VERSION}/site-packages/cv2.cpython-38-x86_64-linux-gnu.so \
-    /opt/conda/lib/python${PYTHON_VERSION}/site-packages/
+
+# Copy OpenCV Python bindings (base)
+RUN sudo cp /usr/local/lib/python${PYTHON_VERSION}/site-packages/cv2.cpython-310-x86_64-linux-gnu.so \
+    /opt/conda/lib/python3.10/site-packages
+# Copy OpenCV Python bindings (env: py310)
+RUN sudo cp /usr/local/lib/python${PYTHON_VERSION}/site-packages/cv2.cpython-310-x86_64-linux-gnu.so \
+    /opt/conda/envs/py310/lib/python3.10

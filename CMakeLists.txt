@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSION OFF)
 
 # Find Qt location
-list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+list(APPEND CMAKE_PREFIX_PATH "/usr/local/qt5")
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
